@@ -185,11 +185,11 @@ public class FImageView extends ImageView{
 
 
     private float getEndX(float startX) {
-        return startX + 70;
+        return startX + 100;
     }
 
     private float getEndY(float startY) {
-        return startY + 70;
+        return startY + 100;
     }
 
 

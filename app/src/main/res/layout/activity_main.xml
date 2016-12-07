@@ -8,15 +8,12 @@
     android:layout_height="match_parent"
     tools:context="com.flashimageview.MainActivity">
 
-    <!--<com.flashimageview.FImageView-->
-        <!--android:id="@+id/img"-->
-        <!--app:flashColor="@color/red"-->
-        <!--android:src="@mipmap/bg_personal"-->
-        <!--android:scaleType="fitXY"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content" />-->
+    <com.flashimageview.FImageView
+        android:id="@+id/img"
+        app:flashColor="@color/white"
+        android:src="@mipmap/bg_personal"
+        android:scaleType="fitXY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-    <com.flashimageview.vacationdemo.MeteorView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 </LinearLayout>
