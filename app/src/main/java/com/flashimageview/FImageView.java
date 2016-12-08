@@ -1,12 +1,8 @@
 package com.flashimageview;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
 import android.animation.TypeEvaluator;
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
@@ -21,8 +17,6 @@ public class FImageView extends ImageView{
     private int mWidth;
     private int mHeight;
     private Paint mPaint;
-    private Point mStartPoint;
-    private Point mEndPoint;
     private float xFirst;
     private float yFirst;
     private float xSecond;
@@ -33,6 +27,7 @@ public class FImageView extends ImageView{
     float d1 = 1;
     float d2= 1;
     float d3 = 1;
+
 
     public FImageView(Context context) {
         this(context,null);
@@ -82,22 +77,19 @@ public class FImageView extends ImageView{
             mHeight = getDrawable().getIntrinsicHeight();
         }
         Log.d("onMeasure","mWidth--" + mWidth + "   mHeight--" + mHeight);
-        xFirst = mWidth/3-600;
-        yFirst = -600;
+        xFirst = -100;
+        yFirst = -100;
 
-        xSecond = mWidth/3 - 1100 + mWidth/3;
-        ySecond = -1100;
+        xSecond = mWidth/3 - 600 ;
+        ySecond = -600;
 
-        xThird =-100;
-        yThird = -100;
+        xThird =mWidth/3*2-1100;
+        yThird = -1100;
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        mStartPoint = new Point(mWidth/3-100,-100);
-        mEndPoint = new Point(mWidth/3+mHeight,mHeight);
-        Log.d("onSizeChanged"," mEndPoint--"+ mEndPoint.toString() + "   mHeight--" + getDrawable().getIntrinsicHeight());
 //        ValueAnimator valueAnimator = ObjectAnimator.ofObject(new PointEvaluator(),mStartPoint,mEndPoint);
 //        valueAnimator.setDuration(10000);
 //        valueAnimator.setInterpolator(new LinearInterpolator());
@@ -147,13 +139,15 @@ public class FImageView extends ImageView{
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawLine(xFirst,yFirst,getEndX(xFirst),getEndY(yFirst),mPaint);
-
         canvas.drawLine(xSecond,ySecond,getEndX(xSecond),getEndY(ySecond),mPaint);
         canvas.drawLine(xThird,yThird,getEndX(xThird),getEndY(yThird),mPaint);
 
-        d1 = (float) (d1+0.5);
-        d2 = (float) (d2+0.5);
-        d3 = (float) (d3+0.5);
+        float height = 1920;
+        double speed = (float) 0.6;
+
+        d1 = (float) (d1+speed);
+        d2 = (float) (d2+speed);
+        d3 = (float) (d3+speed);
         xFirst = xFirst+d1;
         yFirst = yFirst+d1;
 
@@ -163,19 +157,19 @@ public class FImageView extends ImageView{
         xThird = xThird+d3;
         yThird = yThird+d3;
 
-        if (yFirst>=mHeight+500) {
-            yFirst =-50;
-            xFirst = mWidth/3-50;
+        if (yFirst>=-100+height) {
+            yFirst =-100;
+            xFirst = -100;
             d1 =1;
         }
-        if (xSecond >= mWidth+500) {
-            xSecond = mWidth/3-100+mWidth/3;
-            ySecond = -100;
+        if (ySecond>=-600+height) {
+            xSecond = mWidth/3-600;
+            ySecond = -600;
             d2 = 1;
         }
-        if (yThird >= mHeight+500) {
-            xThird = -70;
-            yThird = -70;
+        if (yThird >= -1100+height) {
+            xThird = mWidth/3*2-1100;
+            yThird = -1100;
             d3 = 1;
         }
         Log.d("onDraw","  mHeight" + mHeight + "  xFirst--" + xFirst + "  yFirst--"+ ySecond + " xThird--" + xThird + "  yThird--" + yThird);
@@ -192,17 +186,4 @@ public class FImageView extends ImageView{
         return startY + 100;
     }
 
-
-    private class PointEvaluator implements TypeEvaluator<Point> {
-
-        @Override
-        public Point evaluate(float fraction, Point startValue, Point endValue) {
-            Point point = new Point();
-            point.setX((int) (startValue.getX()+(endValue.getX()-startValue.getX())*fraction));
-            point.setY((int) (startValue.getY()+(endValue.getY()-startValue.getY())*fraction));
-//            Log.d("evaluate","fraction---" + fraction + "  end--" +endValue.getX() + "   in--" + (endValue.getX()-startValue.getX()) );
-//            Log.d("onAnimationPoint","toString---" + point.toString() );
-            return point;
-        }
-    }
 }
