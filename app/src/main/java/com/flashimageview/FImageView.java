@@ -1,12 +1,9 @@
 package com.flashimageview;
-
-import android.animation.TypeEvaluator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.ImageView;
 
 /**
@@ -76,7 +73,6 @@ public class FImageView extends ImageView{
         }else {
             mHeight = getDrawable().getIntrinsicHeight();
         }
-        Log.d("onMeasure","mWidth--" + mWidth + "   mHeight--" + mHeight);
         xFirst = -100;
         yFirst = -100;
 
@@ -90,57 +86,14 @@ public class FImageView extends ImageView{
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-//        ValueAnimator valueAnimator = ObjectAnimator.ofObject(new PointEvaluator(),mStartPoint,mEndPoint);
-//        valueAnimator.setDuration(10000);
-//        valueAnimator.setInterpolator(new LinearInterpolator());
-//        valueAnimator.setRepeatCount(ValueAnimator.INFINITE);
-//        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-//            @Override
-//            public void onAnimationUpdate(ValueAnimator animation) {
-//                Point point = (Point) animation.getAnimatedValue();
-//                Log.d("Point","point--" + point.toString());
-//                mStartPoint.setX(point.getX());
-//                mStartPoint.setY(point.getY());
-//                if (point.getX() == mEndPoint.getX() && point.getY()==mEndPoint.getY()) {
-//                    mStartPoint.setX(mWidth/3-100);
-//                    mStartPoint.setY(-100);
-//                }
-//
-//                postInvalidate();
-//            }
-//        });
-//
-//        valueAnimator.addListener(new Animator.AnimatorListener() {
-//            @Override
-//            public void onAnimationStart(Animator animation) {
-//                Log.d("onAnimationStart","---" );
-//            }
-//
-//            @Override
-//            public void onAnimationEnd(Animator animation) {
-//                Log.d("onAnimationEnd","---" + mStartPoint.toString());
-//            }
-//
-//            @Override
-//            public void onAnimationCancel(Animator animation) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationRepeat(Animator animation) {
-//                Log.d("onAnimationStart","---" );
-//            }
-//        });
-//
-//        valueAnimator.start();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawLine(xFirst,yFirst,getEndX(xFirst),getEndY(yFirst),mPaint);
-        canvas.drawLine(xSecond,ySecond,getEndX(xSecond),getEndY(ySecond),mPaint);
-        canvas.drawLine(xThird,yThird,getEndX(xThird),getEndY(yThird),mPaint);
+        canvas.drawLine(xFirst,yFirst,getEnd(xFirst),getEnd(yFirst),mPaint);
+        canvas.drawLine(xSecond,ySecond,getEnd(xSecond),getEnd(ySecond),mPaint);
+        canvas.drawLine(xThird,yThird,getEnd(xThird),getEnd(yThird),mPaint);
 
         float height = 1920;
         double speed = (float) 0.6;
@@ -172,18 +125,12 @@ public class FImageView extends ImageView{
             yThird = -1100;
             d3 = 1;
         }
-        Log.d("onDraw","  mHeight" + mHeight + "  xFirst--" + xFirst + "  yFirst--"+ ySecond + " xThird--" + xThird + "  yThird--" + yThird);
         postInvalidate();
 
     }
 
-
-    private float getEndX(float startX) {
-        return startX + 100;
-    }
-
-    private float getEndY(float startY) {
-        return startY + 100;
+    private float getEnd(float start) {
+        return start + 100;
     }
 
 }
